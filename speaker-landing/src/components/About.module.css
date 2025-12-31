@@ -1,0 +1,143 @@
+/* Внешний контейнер — ФОН НА ВСЮ ШИРИНУ */
+.wrapper {
+  width: 100%;
+  background: var(--bg-muted);
+}
+
+/* Внутренний контейнер — КОНТЕНТ */
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Заголовок */
+.title {
+  font-size: 64px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 24px;
+}
+
+/* Текст */
+.textBlock {
+  margin-bottom: 60px;
+}
+
+.text {
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* Карточки */
+.cardsRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px;
+  align-items: stretch; /* чтобы все карточки тянулись одинаково по высоте ряда */
+}
+
+/* Карточка */
+.smallCard {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 36px 28px;
+  text-align: center;
+
+  /* одинаковая визуальная высота и стабильная геометрия */
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.smallCard:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 0 2px rgba(37, 99, 235, 0.35),
+    0 30px 80px rgba(37, 99, 235, 0.35);
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.cardText {
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .title {
+    font-size: 56px;
+    margin-bottom: 24px;
+  }
+
+  /* section у нас flex — оставляем flex и только паддинги */
+  .section {
+    padding: 80px 40px 40px;
+  }
+
+  .cardsRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  /*
+    ВАЖНО:
+    Центрируем именно последнюю КАРТОЧКУ, а не :last-child.
+    last-of-type гарантирует, что попадем в элемент с классом smallCard,
+    даже если после карточек есть что-то еще.
+  */
+  .smallCard:last-of-type {
+    grid-column: 1 / -1;                         /* отдельная строка */
+    width: calc((100% - 32px) / 2);              /* ровно ширина колонки с учетом gap */
+    justify-self: center;                        /* по центру */
+  }
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .section {
+    padding: 48px 20px;
+    font-size: calc(1em - 4px);
+  }
+
+  .title {
+    font-size: 40px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .cardsRow {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .smallCard {
+    min-height: 140px;
+    width: auto;          /* на всякий — чтобы tablet-width не тащился */
+    justify-self: stretch;
+  }
+
+  /* на мобиле последняя карточка как все */
+  .smallCard:last-of-type {
+    grid-column: auto;
+    width: auto;
+    justify-self: stretch;
+  }
+
+}
